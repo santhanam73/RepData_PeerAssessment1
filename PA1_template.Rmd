@@ -8,7 +8,7 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r Code to process activity data and filter and NA,echo=TRUE}
+```{r}
 activityData <- read.csv("activity.csv", stringsAsFactors = FALSE)
 dim(activityData)
 
@@ -19,7 +19,7 @@ dim(filteredactivityData)
 
 ## What is mean total number of steps taken per day?
 
-```{r Code for Histogram of the total number of steps taken each day, mean and median,echo=TRUE}
+```{r}
 stepsPerDay <- aggregate(steps ~ date, filteredactivityData, sum)
 
 library(ggplot2)
@@ -35,7 +35,7 @@ print(medianStepsPerDay <- median(stepsPerDay$steps))
 
 ## What is the average daily activity pattern?
 
-```{r code to calculate average daily pattern,echo=TRUE}
+```{r}
 
 stepsforInterval<-aggregate(steps~interval, data=filteredactivityData, mean)
 plot(steps~interval, data=stepsforInterval, type="l",xlab = "Interval" , ylab = "Steps")
@@ -43,7 +43,7 @@ plot(steps~interval, data=stepsforInterval, type="l",xlab = "Interval" , ylab = 
 ```
 
 
-```{r code to calculate maximum number of steps in 5 minute interval,echo=TRUE}
+```{r}
 
 print(fiveminintervalwithMaxSteps <- stepsforInterval[which.max(stepsforInterval$steps),]$interval)
 
@@ -52,14 +52,14 @@ print(fiveminintervalwithMaxSteps <- stepsforInterval[which.max(stepsforInterval
 
 ## Imputing missing values
 
-```{r code to calculate Total number of missing values,echo=TRUE}
+```{r}
 
 totalNAvalues <- sum(is.na(activityData$steps))
 print(totalNAvalues)
 
 ```
 
-```{r code to calculate data set including missing values,echo=TRUE}
+```{r}
 getMeanStepsPerInterval<-function(interval){
     stepsforInterval[stepsforInterval$interval==interval,]$steps
 }
@@ -93,7 +93,7 @@ print(medianStepsPerDaynew <- median(stepsPerDaynew$steps))
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r code to calculate difference in weekday and weekends,echo=TRUE}
+```{r}
 
 
 activityDataNoMissingvalues$date <- as.Date(strptime(activityDataNoMissingvalues$date, format="%Y-%m-%d"))

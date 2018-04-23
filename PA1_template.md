@@ -38,7 +38,7 @@ library(ggplot2)
 hist(stepsPerDay$steps,col = "red",xlab = "Total Steps",ylab = "Frequency",main = "Total Number of Steps per Day")
 ```
 
-![](PA1_template_files/figure-html/Code for Histogram of the total number of steps taken each day, mean and median-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 ```r
 print(meanStepsPerDay <- mean(stepsPerDay$steps))
@@ -65,7 +65,7 @@ stepsforInterval<-aggregate(steps~interval, data=filteredactivityData, mean)
 plot(steps~interval, data=stepsforInterval, type="l",xlab = "Interval" , ylab = "Steps")
 ```
 
-![](PA1_template_files/figure-html/code to calculate average daily pattern-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 
 
@@ -120,7 +120,7 @@ stepsPerDaynew <- aggregate(steps ~ date, activityDataNoMissingvalues, sum)
 hist(stepsPerDay$steps,col = "red",xlab = "Total Steps",ylab = "Frequency",main = "Total Number of Steps per Day")
 ```
 
-![](PA1_template_files/figure-html/code to calculate data set including missing values-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ```r
 print(meanStepsPerDaynew <- mean(stepsPerDaynew$steps))
@@ -165,4 +165,4 @@ xyplot(steps ~ interval | day, stepsEachDay, type = "l", layout = c(1, 2),
         xlab = "Interval", ylab = "Number of steps")
 ```
 
-![](PA1_template_files/figure-html/code to calculate difference in weekday and weekends-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
