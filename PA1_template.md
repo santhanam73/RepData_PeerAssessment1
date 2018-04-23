@@ -8,58 +8,89 @@ output:
 
 ## Loading and preprocessing the data
 
-```{r Code to process activity data and filter and NA,echo=TRUE}
+
+```r
 activityData <- read.csv("activity.csv", stringsAsFactors = FALSE)
 dim(activityData)
+```
 
+```
+## [1] 17568     3
+```
+
+```r
 filteredactivityData <- activityData[complete.cases(activityData), ]
 dim(filteredactivityData)
+```
 
+```
+## [1] 15264     3
 ```
 
 ## What is mean total number of steps taken per day?
 
-```{r Code for Histogram of the total number of steps taken each day, mean and median,echo=TRUE}
+
+```r
 stepsPerDay <- aggregate(steps ~ date, filteredactivityData, sum)
 
 library(ggplot2)
 
 hist(stepsPerDay$steps,col = "red",xlab = "Total Steps",ylab = "Frequency",main = "Total Number of Steps per Day")
+```
+
+![](PA1_template_files/figure-html/Code for Histogram of the total number of steps taken each day, mean and median-1.png)<!-- -->
+
+```r
 print(meanStepsPerDay <- mean(stepsPerDay$steps))
+```
 
+```
+## [1] 10766.19
+```
+
+```r
 print(medianStepsPerDay <- median(stepsPerDay$steps))
+```
 
-
+```
+## [1] 10765
 ```
 
 
 ## What is the average daily activity pattern?
 
-```{r code to calculate average daily pattern,echo=TRUE}
 
+```r
 stepsforInterval<-aggregate(steps~interval, data=filteredactivityData, mean)
 plot(steps~interval, data=stepsforInterval, type="l",xlab = "Interval" , ylab = "Steps")
-
 ```
 
+![](PA1_template_files/figure-html/code to calculate average daily pattern-1.png)<!-- -->
 
-```{r code to calculate maximum number of steps in 5 minute interval,echo=TRUE}
 
+
+```r
 print(fiveminintervalwithMaxSteps <- stepsforInterval[which.max(stepsforInterval$steps),]$interval)
+```
 
-
+```
+## [1] 835
 ```
 
 ## Imputing missing values
 
-```{r code to calculate Total number of missing values,echo=TRUE}
 
+```r
 totalNAvalues <- sum(is.na(activityData$steps))
 print(totalNAvalues)
-
 ```
 
-```{r code to calculate data set including missing values,echo=TRUE}
+```
+## [1] 2304
+```
+
+
+```r
 getMeanStepsPerInterval<-function(interval){
     stepsforInterval[stepsforInterval$interval==interval,]$steps
 }
@@ -74,28 +105,47 @@ for(eachvalue in 1:nrow(activityDataNoMissingvalues)){
 
 filteredactivityDataCheck <- activityDataNoMissingvalues[complete.cases(activityDataNoMissingvalues), ]
 dim(filteredactivityDataCheck)
+```
 
+```
+## [1] 17568     3
+```
+
+```r
 #The check above illustrates that all NA values are filled in
 
 #Histogram with the above new data set
 
 stepsPerDaynew <- aggregate(steps ~ date, activityDataNoMissingvalues, sum)
 hist(stepsPerDay$steps,col = "red",xlab = "Total Steps",ylab = "Frequency",main = "Total Number of Steps per Day")
+```
 
+![](PA1_template_files/figure-html/code to calculate data set including missing values-1.png)<!-- -->
+
+```r
 print(meanStepsPerDaynew <- mean(stepsPerDaynew$steps))
+```
 
+```
+## [1] 10766.19
+```
+
+```r
 print(medianStepsPerDaynew <- median(stepsPerDaynew$steps))
+```
 
+```
+## [1] 10766.19
+```
+
+```r
 #The mean did not change however the median changed by a small %
-
-
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r code to calculate difference in weekday and weekends,echo=TRUE}
 
-
+```r
 activityDataNoMissingvalues$date <- as.Date(strptime(activityDataNoMissingvalues$date, format="%Y-%m-%d"))
 activityDataNoMissingvalues$day <- weekdays(activityDataNoMissingvalues$date)
 for (eachday in 1:nrow(activityDataNoMissingvalues)) {
@@ -113,6 +163,6 @@ names(stepsEachDay) <- c("interval", "day", "steps")
 library(lattice)
 xyplot(steps ~ interval | day, stepsEachDay, type = "l", layout = c(1, 2), 
         xlab = "Interval", ylab = "Number of steps")
-
-
 ```
+
+![](PA1_template_files/figure-html/code to calculate difference in weekday and weekends-1.png)<!-- -->
